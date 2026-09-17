@@ -25,6 +25,7 @@ contains the answer.
 **Why this target:**
 <!-- e.g. "One of my questions is about a topic only two documents mention, so
      I expect that one to be hard." -->
+     i wanna leave some room for error
 
 ---
 
@@ -35,6 +36,8 @@ Every answer the system produces names at least one source document.
 **Why this target:**
 <!-- Why all five and not four? What about your setup makes that achievable —
      or what would have to go wrong for it not to be? -->
+
+     i feel like thats a bare minimum for a RAG system/pipeline
 
 ---
 
@@ -53,6 +56,7 @@ in at least 4 of 5 tries.
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
 
+     yes that is a valid criteria cause we dont want false info(or the model to helusinate some details)
 ---
 
 ## 4. Something about your chunks
