@@ -97,7 +97,46 @@ def split_documents(documents: list[Document]) -> list[Chunk]:
       - Would splitting on paragraph breaks keep more thoughts intact than
         splitting on a character count?
     """
-    return fallback_split(documents)
+    """
+    Split city guides by Markdown section.
+
+    Each chunk keeps the document title so that a section can stand on its own
+    during retrieval. Title-only preambles are skipped, while introductory
+    paragraphs are kept as their own chunk.
+    """
+    chunks: list[Chunk] = []
+
+    for doc in documents:
+        parts = doc.text.split("\n## ")
+
+        preamble = parts[0].strip()
+        preamble_lines = preamble.splitlines()
+
+        title = preamble_lines[0].strip()
+        intro = "\n".join(preamble_lines[1:]).strip()
+
+        pieces = []
+
+        # Keep the introduction only if there is actual text below the title.
+        if intro:
+            pieces.append(f"{title}\n\n{intro}")
+
+        # Keep each Markdown section intact and prefix it with the document title.
+        for raw_section in parts[1:]:
+            section = "## " + raw_section.strip()
+            pieces.append(f"{title}\n\n{section}")
+
+        for index, piece in enumerate(pieces):
+            chunks.append(
+                Chunk(
+                    text=piece,
+                    source=doc.source,
+                    index=index,
+                    produced_by="chunker.py::split_documents",
+                )
+            )
+
+    return chunks
 
 
 def describe(chunks: list[Chunk]) -> str:
