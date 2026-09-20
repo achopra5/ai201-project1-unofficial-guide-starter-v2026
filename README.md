@@ -202,10 +202,6 @@ out-of-scope questions were rejected.
 
      Milestone 5. -->
 
-**1.**
-
-**2.**
-
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
      claims earns nothing.
