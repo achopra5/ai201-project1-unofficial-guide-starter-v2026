@@ -137,14 +137,25 @@ June and September for the beach without the crowds. July and August are busy an
 <!-- One complete question and answer, pasted as text, with the source line
      visible. Milestone 4. -->
 
-**Question:**
+**Question:** How often do buses run from Brightwater to Kestrelford on Saturdays?
 
 **Answer:**
 
 ```
+Buses run from Brightwater to Kestrelford every two hours on Saturdays
+(from `guide_kestrelford.md` and `guide_regional_transport.md`).
+
+Sources retrieved: guide_brightwater.md, guide_givens_mill.md,
+guide_kestrelford.md, guide_marchwood.md, guide_regional_transport.md
 ```
 
-**My relevance cutoff:**
+**My relevance cutoff: 0.60**
+
+The five in-corpus questions had best distances ranging from 0.2176 to
+0.3962. The five out-of-scope questions had best distances ranging from
+0.8026 to 0.9753. There was a clear gap between 0.3962 and 0.8026, so I kept
+the cutoff at 0.60. This accepts all five questions the corpus should cover
+while rejecting all five clearly unrelated questions.
 
 <!-- The number you set in config.py, and how you got there.
 
@@ -156,8 +167,18 @@ June and September for the beach without the crowds. July and August are busy an
      Milestone 4. -->
 
 | Question | In corpus? | Best distance |
-|---|---|---|
-|  |  |  |
+|---|---|---:|
+| How often do buses run from Brightwater to Kestrelford on Saturdays? | Yes | 0.2176 |
+| What time does Kestrelford's bakery usually sell out? | Yes | 0.3302 |
+| What time should visitors arrive at Halden Bay in August to avoid parking problems? | Yes | 0.2825 |
+| How long does the train from Brightwater to the regional hub take? | Yes | 0.2597 |
+| What can happen to Kestrelford during snowy winter weather? | Yes | 0.3962 |
+| What is the capital of Mongolia? | No | 0.8026 |
+| How do I change the oil in a diesel engine? | No | 0.8881 |
+| Who won the 1994 World Cup? | No | 0.9753 |
+| What is the recommended dosage of ibuprofen for a headache? | No | 0.8350 |
+| How do I write a for loop in Rust? | No | 0.8365 |
+
 
 ## How I Used AI
 
