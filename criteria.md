@@ -25,7 +25,7 @@ contains the answer.
 **Why this target:**
 <!-- e.g. "One of my questions is about a topic only two documents mention, so
      I expect that one to be hard." -->
-     i wanna leave some room for error
+     I chose 4 out of 5 because some information in the city guides is spread across longer sections or appears in multiple documents, so retrieval may miss one question even if the system generally works well.
 
 ---
 
@@ -37,7 +37,7 @@ Every answer the system produces names at least one source document.
 <!-- Why all five and not four? What about your setup makes that achievable —
      or what would have to go wrong for it not to be? -->
 
-     i feel like thats a bare minimum for a RAG system/pipeline
+     I think naming a source is a basic requirement for a RAG system because the answer should be verifiable against the documents it retrieved.
 
 ---
 
@@ -56,7 +56,7 @@ in at least 4 of 5 tries.
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
 
-     yes that is a valid criteria cause we dont want false info(or the model to helusinate some details)
+     I chose 4 out of 5 because the system should reject almost all clearly unrelated questions, while still allowing for one case where an unrelated question happens to have a misleadingly similar chunk.
 ---
 
 ## 4. Something about your chunks
@@ -66,6 +66,7 @@ in at least 4 of 5 tries.
      How would you know if your chunks were the right size? Name something
      countable or observable.
 
+
      Examples of the right shape — don't copy these, they should come from
      what you actually saw in Milestone 3:
        - "At least 4 of 5 sampled chunks read as a complete thought, with no
@@ -73,11 +74,12 @@ in at least 4 of 5 tries.
        - "No chunk is shorter than 200 characters, since anything below that
           in my corpus turned out to be a heading with no content under it." -->
 
+For at least 4 of 5 sampled chunks, the chunk should not begin or end in the middle of a sentence.
 
 
 **Why this target:**
 
-
+If a chunk cuts off in the middle of a sentence, important context can be split between chunks and make the retrieved information harder to understand on its own.
 
 ---
 
@@ -91,12 +93,11 @@ in at least 4 of 5 tries.
      present — anything, as long as it names a number or an observable
      outcome. -->
 
-
+For at least 4 of my 5 test questions, the generated answer should contain the expected answer phrase defined in questions.py
 
 **Why this target:**
 
-
-
+None of the previous criteria directly measure whether the final generated answer itself is correct, so this checks whether the system actually produces the expected information.
 ---
 
 <!-- ─────────────────────────────────────────────────────────────────────────
