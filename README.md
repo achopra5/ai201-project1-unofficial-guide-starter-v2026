@@ -2,24 +2,21 @@
 
 Aditya Chopra — Corpus: `city_guides`
 
-> **This file is your submission.** Fill it in as you go — most sections get
-> written during the milestone that produces them, not at the end.
->
-> How the starter works, and every command you'll need, is in `RUNNING.md`.
-> Leave that file alone.
->
-> **Paste everything as text.** No screenshots, no video. A typed table gets
-> full credit; a picture of the same table gets none.
->
-> Delete these instruction blocks as you replace them. The `<!-- -->` comments
-> are notes to you and don't show up when the page renders — you can leave them
-> or remove them.
+
 
 ---
 
 # Unit 1
 
 ## What This Does
+
+This project is a retrieval-augmented generation system built around the
+`city_guides` corpus. It answers practical questions about transportation,
+food, lodging, seasonal conditions, accessibility, and other details covered
+by the regional travel guides. The system retrieves relevant guide sections,
+rejects questions that are too far outside the corpus, and uses Gemini to
+generate a short answer grounded only in the retrieved documents. Each answer
+also names the source files it used.
 
 <!-- Three or four sentences. Which corpus you picked, and the kinds of
      questions your system answers. Write it for someone who has never seen
@@ -181,6 +178,20 @@ while rejecting all five clearly unrelated questions.
 
 
 ## How I Used AI
+
+**1.** I used ChatGPT to help analyze why the starter's fixed-size character
+chunking was producing weak chunks. It suggested using the Markdown section
+structure of the city guides and keeping the document title with each section.
+I implemented that strategy, tested the resulting chunks, and then adjusted it
+so the 780-character chunk-size target was enforced without changing the source
+text.
+
+**2.** I used ChatGPT to help interpret the retrieval distances from my five
+in-corpus and five out-of-scope questions. It pointed out the gap between the
+highest in-corpus distance, 0.3962, and the lowest out-of-scope distance,
+0.8026. I kept the existing 0.60 cutoff because it sits inside that gap, then
+verified that all five in-corpus questions were answered correctly and all five
+out-of-scope questions were rejected.
 
 <!-- Two specific moments. For each: what you asked for, what came back, and
      what you changed about it.
