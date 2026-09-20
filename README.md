@@ -1,6 +1,6 @@
 # The Unofficial Guide
 
-<!-- Replace this line with your name and which corpus you picked. -->
+Aditya Chopra — Corpus: `city_guides`
 
 > **This file is your submission.** Fill it in as you go — most sections get
 > written during the milestone that produces them, not at the end.
@@ -30,7 +30,7 @@
 ## Chunking Strategy
 
 **Chunk size: 780**
-**Overlap: 0 **
+**Overlap: 0**
 
 <!-- What about YOUR documents made you pick these numbers? Short posts and
      long sectioned guides don't want the same chunking, and "800 seemed
@@ -46,10 +46,11 @@ I used a section-based chunking strategy for the city guides instead of the
 starter's fixed 800-character windows. The guides are organized with Markdown
 headings, so each chunk keeps the document title together with one section.
 
-I used a maximum chunk size of 780 characters and no overlap. The sections in
+I used 780 characters as the chunk-size target and no overlap. The sections in
 this corpus are already organized around individual topics, so keeping them
 intact preserves complete thoughts without duplicating text across neighboring
-chunks.
+chunks. All of the section-based chunks fit within that target, with the
+longest being 762 characters.
 
 The final corpus produced 94 chunks with an average length of 322 characters.
 The shortest chunk was 174 characters and the longest was 762 characters.
@@ -65,7 +66,7 @@ The shortest chunk was 174 characters and the longest was 762 characters.
 
      Milestone 3. -->
 
-**Chunk 1** — source: `` — produced by: ``
+**Chunk 1** — source: `guide_accessibility.md#0` — produced by: `chunker.py::split_documents`
 
 ```
 ======================================================================
@@ -77,7 +78,7 @@ An honest assessment rather than a promotional one. Some of these places are
 difficult and it is better to know in advance.
 ```
 
-**Chunk 2** — source: `` — produced by: ``
+**Chunk 2** — source: `guide_corry_vale.md#5` — produced by: `chunker.py::split_documents`
 
 ```
 ======================================================================
@@ -90,7 +91,7 @@ Chunk 2  |  source: guide_corry_vale.md#5  |  produced by: chunker.py::split_doc
 Perhaps thirty beds in the entire valley, spread across two pubs and a handful of farmhouse rooms. In summer these are booked months ahead. Camping is permitted on two marked fields and nowhere else.
 ```
 
-**Chunk 3** — source: `` — produced by: ``
+**Chunk 3** — source: `guide_givens_mill.md#2` — produced by: `chunker.py::split_documents`
 
 ```
 ======================================================================
@@ -103,7 +104,7 @@ Chunk 3  |  source: guide_givens_mill.md#2  |  produced by: chunker.py::split_do
 Everything is on one street along the river. The mill is at one end and the church at the other, eight minutes apart. The riverside path continues in both directions for as far as you want to walk.
 ```
 
-**Chunk 4** — source: `` — produced by: ``
+**Chunk 4** — source: `guide_kestrelford.md#4` — produced by: `chunker.py::split_documents`
 
 ```
 ======================================================================
@@ -117,7 +118,7 @@ The market square on a Saturday morning is the main event and has run continuous
 
 ```
 
-**Chunk 5** — source: `` — produced by: ``
+**Chunk 5** — source: `guide_pellew_sands.md#6` — produced by: `chunker.py::split_documents`
 
 ```
 ======================================================================
@@ -129,8 +130,6 @@ Chunk 5  |  source: guide_pellew_sands.md#6  |  produced by: chunker.py::split_d
 
 June and September for the beach without the crowds. July and August are busy and the town is at its most itself, for better and worse. Winter is bleak, largely closed, and has a following among people who like that sort of thing.
 
-For each one, ask: could someone answer a question using only this,
-without reading what came before or after?
 ```
 
 ## Sample Answer

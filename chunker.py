@@ -124,7 +124,27 @@ def split_documents(documents: list[Document]) -> list[Chunk]:
         # Keep each Markdown section intact and prefix it with the document title.
         for raw_section in parts[1:]:
             section = "## " + raw_section.strip()
-            pieces.append(f"{title}\n\n{section}")
+            piece = f"{title}\n\n{section}"
+
+            if len(piece) <= config.CHUNK_SIZE:
+                pieces.append(piece)
+            else:
+                # If a section is unusually long, split it on paragraph boundaries
+                # rather than cutting through sentences.
+                paragraphs = section.split("\n\n")
+                current = title
+
+                for paragraph in paragraphs:
+                    candidate = f"{current}\n\n{paragraph}"
+
+                    if len(candidate) > config.CHUNK_SIZE and current != title:
+                        pieces.append(current)
+                        current = f"{title}\n\n{paragraph}"
+                    else:
+                        current = candidate
+
+                if current != title:
+                   pieces.append(current)
 
         for index, piece in enumerate(pieces):
             chunks.append(
