@@ -387,11 +387,11 @@ the criterion was applied literally. Runs 2 and 3 used `before 10am` and scored
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| 1 | Retrieved chunks contain the answer | MET | All five test questions retrieved at least one chunk containing the answer in every run, exceeding the 4-of-5 target. |
+| 2 | Every answer names a source | MET | All 15 generated answers named at least one source document, meeting the 5-of-5 target in all three runs. |
+| 3 | Gate stops out-of-corpus questions | MET | The relevance gate refused all 5 out-of-scope questions, exceeding the 4-of-5 target. |
+| 4 | Sampled chunks do not begin or end mid-sentence | MET | All 5 sampled chunks began and ended on complete sentence or section boundaries, exceeding the 4-of-5 target. |
+| 5 | Generated answer contains expected phrase | MET | The three runs scored 4/5, 5/5, and 5/5. Since the target was at least 4 of 5, it held in every run. |
 
 ## Diagnoses
 
