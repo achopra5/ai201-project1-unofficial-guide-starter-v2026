@@ -413,6 +413,28 @@ the criterion was applied literally. Runs 2 and 3 used `before 10am` and scored
 
      Milestone 3. -->
 
+No criteria were missed in the before run. All five original targets were met
+across all three runs, so there is no failed pipeline stage to diagnose.
+
+The results suggest that some of my original targets were conservative.
+Criterion 1 is the one I would tighten most. It currently requires at least
+4 of 5 questions to have an answer-bearing chunk somewhere in the retrieved
+results. Because the system achieved 5/5 consistently, a stronger version
+would require all 5 questions to have an answer-bearing chunk within the top
+3 retrieved results.
+
+The retrieval output also showed why this would be a more useful test. For the
+Kestrelford Saturday bus question, the first two results were directly relevant,
+but lower-ranked results included documents such as `guide_marchwood.md` and
+`guide_givens_mill.md`. The current criterion counts this as a complete success
+as long as the answer appears somewhere in the top five, even though ranking
+quality could still be improved.
+
+Criterion 5 also exposed a measurement limitation rather than a system failure:
+one correct Halden Bay answer said `before 10 am` while the expected phrase was
+`before 10am`. The answer was semantically correct, so I would not diagnose
+that as a generation failure.
+
 ## The Improvement
 
 **What I changed:**
