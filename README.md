@@ -229,15 +229,150 @@ out-of-scope questions were rejected.
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 4. Sampled chunks do not begin or end mid-sentence | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 5. Generated answer contains expected phrase | 4 of 5 | 4/5 | 5/5 | 5/5 | MET |
 
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
      Name the file and function that produced it. -->
+
+### Evidence from the before run
+
+Produced from `results/run_2026-09-23_1923_before.md` using
+`run_eval.py::main`, with retrieval from `store.py::search` and chunks from
+`chunker.py::split_documents`.
+
+**Criterion 1 — retrieved chunks contain the answer**
+
+For the Saturday bus question, retrieval returned the relevant Kestrelford and
+regional transport documents as the top two results:
+
+```text
+Question: How often do buses run from Brightwater to Kestrelford on Saturdays?
+
+#   distance   source
+1   0.2176     guide_kestrelford.md
+2   0.2323     guide_regional_transport.md
+3   0.3604     guide_marchwood.md
+4   0.3628     guide_givens_mill.md
+5   0.3660     guide_brightwater.md
+
+Gate: best distance 0.218 is under the 0.6 cutoff
+```
+
+All five test questions retrieved material containing their answers, so this
+criterion scored 5/5 in all three runs.
+
+**Criterion 2 — every answer names a source**
+
+Example from run 1:
+
+```text
+Kestrelford's bakery usually sells out by 11am.
+
+This information comes from `guide_kestrelford.md` and `guide_eating.md`.
+```
+
+All 15 generated answers named at least one source document.
+
+**Criterion 3 — gate stops out-of-corpus questions**
+
+Output from `run_eval.py::check_out_of_scope`:
+
+```text
+refused  (best distance 0.803)  What is the capital of Mongolia?
+refused  (best distance 0.888)  How do I change the oil in a diesel engine?
+refused  (best distance 0.975)  Who won the 1994 World Cup?
+refused  (best distance 0.835)  What is the recommended dosage of ibuprofen for a headache?
+refused  (best distance 0.836)  How do I write a for loop in Rust?
+-> gate refused 5 of 5
+```
+
+Because retrieval and the gate are deterministic, this same 5/5 result applies
+to all three run columns.
+
+**Criterion 4 — sampled chunks do not begin or end mid-sentence**
+
+Output from `chunker.py::split_documents`:
+
+```text
+Chunk 1 | source: guide_accessibility.md#0
+
+# Getting around the region with limited mobility
+
+An honest assessment rather than a promotional one. Some of these places are
+difficult and it is better to know in advance.
+
+Chunk 2 | source: guide_corry_vale.md#5
+
+# Corry Vale
+
+## Where to stay
+
+Perhaps thirty beds in the entire valley, spread across two pubs and a handful
+of farmhouse rooms. In summer these are booked months ahead. Camping is
+permitted on two marked fields and nowhere else.
+
+Chunk 3 | source: guide_givens_mill.md#2
+
+# Givens Mill
+
+## Getting around
+
+Everything is on one street along the river. The mill is at one end and the
+church at the other, eight minutes apart. The riverside path continues in both
+directions for as far as you want to walk.
+
+Chunk 4 | source: guide_kestrelford.md#4
+
+# Kestrelford
+
+## What to see
+
+The market square on a Saturday morning is the main event and has run
+continuously since the 1400s. The parish church has a 13th-century tower you
+can climb for £2. The old trackbed walk runs six miles to the next village
+along an easy gradient and is the best half-day here.
+
+Chunk 5 | source: guide_pellew_sands.md#6
+
+# Pellew Sands
+
+## When to go
+
+June and September for the beach without the crowds. July and August are busy
+and the town is at its most itself, for better and worse. Winter is bleak,
+largely closed, and has a following among people who like that sort of thing.
+```
+
+All five sampled chunks begin and end on complete sentence or section
+boundaries, so this criterion scored 5/5.
+
+**Criterion 5 — generated answer contains the expected phrase**
+
+Four of the five answers in run 1 contained the expected phrase exactly. The
+Halden Bay answer was:
+
+```text
+To avoid parking problems in August, visitors should arrive before 10 am
+(or plan to use the overflow lot).
+
+This information comes from `guide_seasons.md` (and is also mentioned in
+`guide_halden_bay.md` and `guide_regional_transport.md`).
+```
+
+`questions.py` defines the expected phrase as:
+
+```text
+before 10am
+```
+
+Because run 1 generated `before 10 am` with a space, that run scored 4/5 when
+the criterion was applied literally. Runs 2 and 3 used `before 10am` and scored
+5/5.
 
 ## Verdicts
 
