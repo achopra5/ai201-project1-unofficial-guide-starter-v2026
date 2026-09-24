@@ -439,7 +439,20 @@ that as a generation failure.
 
 **What I changed:**
 
+I reduced retrieval `TOP_K` from 5 to 3, so the generator now receives only
+the three highest-ranked chunks instead of the top five.
+
 **Why I picked it:**
+
+The before run showed that the answer-bearing chunks were consistently ranked
+near the top, while some lower-ranked results were only loosely related to the
+question. For example, the Kestrelford Saturday bus question had the two
+directly relevant documents as its first two results, followed by less relevant
+documents such as `guide_marchwood.md` and `guide_givens_mill.md`.
+
+I chose this change to test whether using fewer, more focused retrieved chunks
+can preserve answer accuracy and source attribution while reducing irrelevant
+context. No other part of the system was changed.
 
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
