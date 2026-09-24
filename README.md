@@ -193,6 +193,16 @@ highest in-corpus distance, 0.3962, and the lowest out-of-scope distance,
 verified that all five in-corpus questions were answered correctly and all five
 out-of-scope questions were rejected.
 
+**3.** In Unit 2, I asked ChatGPT to help choose one controlled improvement
+after the baseline met all five criteria. It pointed out that the answer-bearing
+chunks were already near the top of the retrieval results while some lower-ranked
+chunks were tangential. Based on that analysis, I chose to reduce `TOP_K` from
+5 to 3 rather than make a larger change to the retrieval system. I changed only
+that setting and reran the full evaluation. The after run still met all five
+criteria while total model tokens dropped from 9,514 to 6,692. I also kept the
+original criterion 5 target instead of loosening it when ChatGPT noticed the
+`10am` versus `10 am` formatting mismatch.
+
 <!-- Two specific moments. For each: what you asked for, what came back, and
      what you changed about it.
 
@@ -530,9 +540,41 @@ such as `10am` versus `10 am`, rather than retrieval quality.
 
      Milestone 5. -->
 
+
+No original acceptance criterion is still missed after the improvement. All five
+criteria met their targets in the after run.
+
+There are still two limitations I would address with more time. First, criterion
+5 uses a literal expected-phrase match, so a correct answer such as `before 10 am`
+can fail when the expected string is `before 10am`. I would make that evaluator
+normalize capitalization and spacing around time expressions before comparing
+answers.
+
+Second, reducing `TOP_K` removed some unnecessary context, but the top three
+results can still contain tangential documents. For example,
+`guide_marchwood.md` was still retrieved for the Kestrelford bus question even
+though the answer came from the Kestrelford and regional transport guides. A
+future iteration could test reranking or hybrid lexical + semantic retrieval.
+
+I stopped here because this unit called for one controlled system improvement.
+Making additional retrieval or evaluation changes in the same experiment would
+make the before/after comparison less controlled.
+
 ## What I'd Do Differently
 
 <!-- Knowing what you know now — which of your five criteria would you write
      differently, and why?
 
      Milestone 5. -->
+
+I would make criterion 1 stricter. Requiring the answer to appear somewhere in
+the top five retrieved chunks was too forgiving for this corpus. A better
+criterion would require all 5 test questions to have an answer-bearing chunk
+within the top 3 retrieved results. That would measure retrieval ranking quality,
+not just whether the answer appears somewhere in a relatively large context.
+
+I would also rewrite criterion 5 so that it measures the intended content rather
+than exact formatting. The current literal phrase check treated `before 10 am`
+differently from `before 10am` even though they mean the same thing. I would
+normalize case and insignificant spacing before checking the expected phrase
+while keeping the expected factual content fixed.
