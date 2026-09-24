@@ -464,13 +464,54 @@ context. No other part of the system was changed.
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 4. Sampled chunks do not begin or end mid-sentence | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 5. Generated answer contains expected phrase | 4 of 5 | 5/5 | 5/5 | 4/5 | MET |
+
+### Evidence from the after run
+
+Produced from `results/run_2026-09-23_2006_after.md` using
+`run_eval.py::main` with `TOP_K = 3`.
+
+For the Saturday bus question, the system retrieved three sources instead of
+five:
+
+```text
+guide_kestrelford.md
+guide_marchwood.md
+guide_regional_transport.md
+```
+
+The generated answer remained correct:
+
+```text
+Buses run from Brightwater to Kestrelford every two hours on Saturdays.
+
+Source: guide_kestrelford.md
+(and also mentioned in guide_regional_transport.md).
+```
+
+All five test questions continued to retrieve answer-bearing material within
+the top three results. All 15 generated answers named at least one source, and
+the relevance gate still refused all 5 out-of-scope questions.
+
+Criterion 5 scored 5/5, 5/5, and 4/5. In run 3, the Halden Bay answer said
+`before 10 am`, while the expected phrase in `questions.py` is `before 10am`.
+The generated answer was still semantically correct.
 
 **Did it help?**
+
+Yes. Reducing `TOP_K` from 5 to 3 preserved the same acceptance-criterion
+performance while sending less retrieved context to the generator. The before
+evaluation used 9,514 tokens, while the after evaluation used 6,692 tokens.
+
+The change therefore reduced the amount of retrieved context passed to the
+generator without reducing answer correctness, source attribution, or
+relevance-gate performance. It did not solve the brittle exact-phrase
+measurement in criterion 5 because that issue comes from formatting differences
+such as `10am` versus `10 am`, rather than retrieval quality.
 
 <!-- Say plainly whether it did, and how you know. If it made things worse,
      say that — a change that backfired, honestly reported, earns full credit
